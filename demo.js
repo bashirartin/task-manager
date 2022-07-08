@@ -1,28 +1,27 @@
-// const testPromise = new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//         // resolve('This is right')
-//         reject('This is wrong')
-//     },2000)
+require('./src/db/mongoose')
+const User = require('./src/models/user')
+const Task = require('./src/models/task')
+
+// const updateAgeAndCount = async (id, age) => {
+//     const user = await User.findByIdAndUpdate(id, { age })
+//     const count = await User.countDocuments( { age })
+//     return count
+// }
+
+// updateAgeAndCount('62bd6a34368bf0e0f38cbafb', 33).then((res) => {
+//     console.log(res)
+// }).catch((e) =>  {
+//     console.log(e)
 // })
 
-
-// testPromise.then((response) => {
-//     console.log('Response '+ response)
-// }).catch((error) => {
-//     console.log('Error! ', error)
-// })
-
-const testCallback = (callback) => {
-    setTimeout(() => {
-        // callback('this is error', undefined)
-        callback(undefined, 'this is right')
-    },2000)
+const deleteTaskAndCount = async (id) => {
+    const task = await Task.findByIdAndDelete(id)
+    const count = await Task.countDocuments({ completed: false })
+    return count
 }
 
-testCallback((error, result) => {
-    if(error) {
-        console.log('Error', error)
-    }
-
-    console.log('Result1 ', result)  
+deleteTaskAndCount('62c7f1d8b66c5e7ebd57e249').then((count) => {
+    console.log(count)
+}).catch((e) => {
+    console.log(e)
 })
